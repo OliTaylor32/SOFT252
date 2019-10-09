@@ -90,7 +90,17 @@ public class StageResultsTest {
 
     @Test
     public void testAddModuleMark() {
-        fail("Test not yet implemented");
+        System.out.println("Testing addModuleMarks");
+        
+        empty.addModuleMark(10, 50.0);
+        
+        int expIntResult = 10;
+        double expDoubleResult = 50.0;
+        
+        assertEquals("credits", expIntResult, empty.getTotalCredits());
+        assertEquals("total", expDoubleResult, empty.getTotalMarks(), 0.0);
+        empty.resetValues();
+ 
     }
 
     @Test
