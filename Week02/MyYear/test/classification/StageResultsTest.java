@@ -75,7 +75,17 @@ public class StageResultsTest {
 
     @Test
     public void testResetValues() {
-        fail("Test not yet implemented");
+        System.out.println("Testing resetValues");
+        
+        full.resetValues();
+        
+        int expIntResult = 0;
+        double expDoubleResult = 0.0;
+        
+        assertEquals("credits", expIntResult, full.getTotalCredits());
+        assertEquals("total", expDoubleResult, full.getTotalMarks(), 0.0);
+        
+        full.addModuleMark(120,50.0);
     }
 
     @Test
