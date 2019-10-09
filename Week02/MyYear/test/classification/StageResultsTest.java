@@ -17,8 +17,12 @@ import static org.junit.Assert.*;
  * @author otaylor4
  */
 public class StageResultsTest {
+    private StageResults empty;
+    private StageResults full;
+    private StageResults halfFull;
     
     public StageResultsTest() {
+        
     }
     
     @BeforeClass
@@ -31,6 +35,13 @@ public class StageResultsTest {
     
     @Before
     public void setUp() {
+        empty = new StageResults();
+        
+        full = new StageResults();
+        full.addModuleMark(120,50.0);
+        
+        halfFull = new StageResults();
+        halfFull.addModuleMark(60, 50.0);
     }
     
     @After
@@ -55,7 +66,11 @@ public class StageResultsTest {
 
     @Test
     public void testIsComplete() {
-        fail("Test not yet implemented");
+        System.out.println("Testing is Complete");
+        
+        assertFalse("empty object", empty.isComplete());
+        assertFalse("halfFull object", halfFull.isComplete());
+        assertTrue("full object", full.isComplete());
     }
 
     @Test
