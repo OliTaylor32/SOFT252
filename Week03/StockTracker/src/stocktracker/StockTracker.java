@@ -15,7 +15,24 @@ public class StockTracker {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        PhysicalStockItem objPhysicalItem = 
+                new PhysicalStockItem("snuff: A Diskworld book by terry Pratchett", 100);
+        
+        ServiceStockItem objVirtualItem = 
+                new ServiceStockItem("Wintersmith: A Diskworld eBook by Terry Pratchett");
+        
+        String strMessage = objPhysicalItem.getName()
+                + ",Is in stock = " + objPhysicalItem.isInStock()
+                + ", quantity in stock: " + objPhysicalItem.getQuantityInStock();
+        System.out.println(strMessage);
+        
+        strMessage = objPhysicalItem.getName()
+                + ",Is in stock = " + objVirtualItem.isInStock()
+                + ", quantity in stock: " + objVirtualItem.getQuantityInStock();
+        System.out.println(strMessage);
+        
+        
     }
     
 }
