@@ -5,6 +5,8 @@
  */
 package guis;
 
+import HospitalEntities.User;
+
 /**
  *
  * @author Oli
@@ -35,7 +37,6 @@ public class Login extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(400, 200));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("ID:");
@@ -45,10 +46,8 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("Password:");
         jLabel2.setName("lbl_Password"); // NOI18N
 
-        jTextField1.setText("ID");
         jTextField1.setName("txt_ID"); // NOI18N
 
-        jPasswordField1.setText("Input Password");
         jPasswordField1.setName("pwd_Password"); // NOI18N
 
         jButton1.setText("Create Account");
@@ -56,6 +55,11 @@ public class Login extends javax.swing.JFrame {
 
         jButton2.setText("Log-in");
         jButton2.setName("btn_Login"); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,7 +78,7 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(144, 144, 144)
                         .addComponent(jButton1)))
@@ -99,6 +103,13 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String id = jTextField1.getText();
+        String pass = new String(jPasswordField1.getPassword());
+        User user = new User(id, pass);
+        user.Login();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

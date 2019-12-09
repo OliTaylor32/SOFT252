@@ -5,11 +5,19 @@
  */
 package HospitalEntities;
 
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 /**
  *
  * @author Oli
  */
 public class User {
+    
     private String id;
     private String password;
     private String fName;
@@ -18,15 +26,39 @@ public class User {
     private int age;
     private char gender;
    
-    public void User(String newID, String newPass)
+    public User(String newID, String newPass)
     {
         id = newID;
         password = newPass;
     }
     
-    private void Login()
+    public void Login ()
     {
-        //Access text file
+        boolean valid = false;
+        File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+        Scanner scan;
+        try 
+        {
+            scan = new Scanner(textFile);
+            
+            while(scan.hasNextLine())
+            {
+                if (scan.nextLine().equals(id)) {
+                    if (scan.nextLine().equals(password)) {
+                        valid = true;
+                        break;
+                    }
+                }
+            }
+        } 
+        catch (FileNotFoundException ex)
+        {
+            System.out.println("error, File not found");
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println(valid);
+        
         //Check forID
             //If there check for password
                 //If it matches Get all other data
