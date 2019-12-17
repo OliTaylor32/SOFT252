@@ -46,6 +46,9 @@ public class User {
                 if (scan.nextLine().equals(id)) {
                     if (scan.nextLine().equals(password)) {
                         valid = true;
+                        if (id.charAt(0) == 'P') {
+                            
+                        }
                         break;
                     }
                 }
