@@ -5,6 +5,7 @@
  */
 package HospitalEntities;
 
+import guis.PatientDashboard;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,8 +47,17 @@ public class User {
                 if (scan.nextLine().equals(id)) {
                     if (scan.nextLine().equals(password)) {
                         valid = true;
-                        if (id.charAt(0) == 'P') {
+                        if (id.charAt(0) == 'P')
+                        { 
+                            fName = scan.nextLine();
+                            sName = scan.nextLine();
+                            address = scan.nextLine();
+                            gender = (scan.nextLine().charAt(0));
+                            age = Integer.parseInt(scan.nextLine());
+                            String nextApp = scan.nextLine();
                             
+                            PatientDashboard window = new PatientDashboard();
+                            window.setVisible(true);
                         }
                         break;
                     }
