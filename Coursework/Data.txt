@@ -7,11 +7,9 @@ M
 45
 Serina James 02/05/2020 15:00
 Serina James 02/05/2019 15:00
-
+Serina James 24/03/2019 12:30
 CurrentPrescription
-Mr. John Doe has been suffering from fever for the last two weeks. He is coughing and the phlegm is green in colour. Suspected bacterial infection – we have collected his phlegm for testing. We are immediately starting him on an antibiotic course.  
-Amoxicillin
-24
-4 per day - at least 6 hours between each dose.
+Mr. John Doe has been suffering from fever for the last two weeks. He is coughing and the phlegm is green in colour. Suspected bacterial infection – we have collected his phlegm for testing. We are immediately starting him on an antibiotic course.
+Amoxicillin, 24, 4 per day - at least 6 hours between each dose. 
 End
  

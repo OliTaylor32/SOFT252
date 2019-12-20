@@ -5,21 +5,32 @@
  */
 package HospitalEntities;
 
+import guis.PatientDashboard;
+
 /**
  *
  * @author Oli
  */
 public class Patient extends User{
-    private String[] nextApp;
+    private String nextApp;
     private String[] appHistory;
     private String[] prescription;
-    /*
+    
     public Patient(String newID, String newPassword, String newFname,
-           String newSname, int newAge, String[] newNextApp, String[] appHistory
-            , String[] newPerscription) {
+           String newSname, String newAddress, int newAge, char newGender, 
+           String newNextApp, String[] newAppHistory, String[] newPerscription){
+        
+        super(newID, newPassword, newFname, newSname, newAddress, newAge, newGender);
+        nextApp = newNextApp;
+        appHistory = newAppHistory;
+        prescription = newPerscription;
         
     }
-
-*/
+    
+    public void CreateDashboard()
+    {
+        PatientDashboard window = new PatientDashboard();
+        window.setVisible(true);
+    }
     
 }
