@@ -31,6 +31,7 @@ public class Patient extends User{
     {
         PatientDashboard window = new PatientDashboard();
         window.setVisible(true);
+        window.showInfo(nextApp, appHistory, prescription);
     }
     
 }

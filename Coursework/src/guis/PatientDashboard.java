@@ -5,6 +5,8 @@
  */
 package guis;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Oli
@@ -16,6 +18,41 @@ public class PatientDashboard extends javax.swing.JFrame {
      */
     public PatientDashboard() {
         initComponents();
+        
+    }
+    
+    public void showInfo(String nextApp, String[] appHistory, String[] prescription)
+    {
+        jTextAreaNextApp.setText(nextApp);
+        
+        DefaultListModel listHistory;
+        listHistory = new DefaultListModel();
+        for (int i = 0; i < appHistory.length; i++) {
+            listHistory.addElement(appHistory[i]);
+        }
+        jListHistory.setModel(listHistory);
+        
+        DefaultListModel listPrescription;
+        listPrescription = new DefaultListModel();
+        for (int i = 0; i < prescription.length; i++) {
+            if (prescription[i].length() < 60) {
+                listPrescription.addElement(prescription[i]);
+            }
+            else
+            {
+                for (int j = 0; 60 < (prescription[i].length() - (j*60)); j++) {
+                    listPrescription.addElement(prescription[i].substring(60 * j, 60* j + 60));
+                    if ((prescription[i].length() - ((j + 1) * 60) < 60)) 
+                    {
+                        listPrescription.addElement(prescription[i].substring(60 * (j + 1)));
+                    }
+                }
+
+            }
+                
+        }
+        jListPrescriptions.setModel(listPrescription);
+
     }
 
     /**
@@ -28,16 +65,16 @@ public class PatientDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        jTextAreaNextApp = new javax.swing.JTextArea();
+        jButtonApp = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListPrescriptions = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jButton2 = new javax.swing.JButton();
-        jSlider1 = new javax.swing.JSlider();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jListHistory = new javax.swing.JList<>();
+        jButtonDelete = new javax.swing.JButton();
+        jSliderRate = new javax.swing.JSlider();
+        jLabelWelcome = new javax.swing.JLabel();
+        jLabelRate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,53 +82,53 @@ public class PatientDashboard extends javax.swing.JFrame {
         jScrollPane1.setHorizontalScrollBar(null);
         jScrollPane1.setName("txt_nextApp\n"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Your Next appointment will appear here...");
-        jTextArea1.setMaximumSize(new java.awt.Dimension(333, 333));
-        jTextArea1.setName("txt_nextApp"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaNextApp.setColumns(20);
+        jTextAreaNextApp.setRows(5);
+        jTextAreaNextApp.setText("Your Next appointment will appear here...");
+        jTextAreaNextApp.setMaximumSize(new java.awt.Dimension(333, 333));
+        jTextAreaNextApp.setName("txt_nextApp"); // NOI18N
+        jScrollPane1.setViewportView(jTextAreaNextApp);
 
-        jButton1.setLabel("Request Appointment");
-        jButton1.setName("btn_requestApp"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonApp.setLabel("Request Appointment");
+        jButtonApp.setName("btn_requestApp"); // NOI18N
+        jButtonApp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAppActionPerformed(evt);
             }
         });
 
         jScrollPane2.setName("lst_Prescriptions"); // NOI18N
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jListPrescriptions.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Current Prescriptions" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(jListPrescriptions);
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        jListHistory.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Appointment History" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList2.setName("lst_appHistory"); // NOI18N
-        jScrollPane3.setViewportView(jList2);
+        jListHistory.setName("lst_appHistory"); // NOI18N
+        jScrollPane3.setViewportView(jListHistory);
 
-        jButton2.setText("Delete Account");
-        jButton2.setName("btn_delete"); // NOI18N
+        jButtonDelete.setText("Delete Account");
+        jButtonDelete.setName("btn_delete"); // NOI18N
 
-        jSlider1.setMaximum(10);
-        jSlider1.setPaintLabels(true);
-        jSlider1.setPaintTicks(true);
-        jSlider1.setSnapToTicks(true);
-        jSlider1.setValue(5);
-        jSlider1.setName("sld_rate"); // NOI18N
+        jSliderRate.setMaximum(10);
+        jSliderRate.setPaintLabels(true);
+        jSliderRate.setPaintTicks(true);
+        jSliderRate.setSnapToTicks(true);
+        jSliderRate.setValue(5);
+        jSliderRate.setName("sld_rate"); // NOI18N
 
-        jLabel1.setText("Welcome Back...");
-        jLabel1.setName("lbl_title"); // NOI18N
+        jLabelWelcome.setText("Welcome Back...");
+        jLabelWelcome.setName("lbl_title"); // NOI18N
 
-        jLabel2.setText("Rate this doctor");
-        jLabel2.setName("lbl_rate"); // NOI18N
+        jLabelRate.setText("Rate this doctor");
+        jLabelRate.setName("lbl_rate"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,50 +142,50 @@ public class PatientDashboard extends javax.swing.JFrame {
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jButton1))
+                                .addComponent(jButtonApp))
                             .addComponent(jScrollPane3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane2)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addComponent(jButtonDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jSliderRate, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(jLabelRate)
                                 .addGap(12, 12, 12))))
-                    .addComponent(jLabel1))
+                    .addComponent(jLabelWelcome))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(jLabel1)
+                .addComponent(jLabelWelcome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonApp)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(jLabelRate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSliderRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
-                        .addComponent(jButton2)))
+                        .addComponent(jButtonDelete)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAppActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAppActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,16 +223,16 @@ public class PatientDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JButton jButtonApp;
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JLabel jLabelRate;
+    private javax.swing.JLabel jLabelWelcome;
+    private javax.swing.JList<String> jListHistory;
+    private javax.swing.JList<String> jListPrescriptions;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JSlider jSliderRate;
+    private javax.swing.JTextArea jTextAreaNextApp;
     // End of variables declaration//GEN-END:variables
 }
