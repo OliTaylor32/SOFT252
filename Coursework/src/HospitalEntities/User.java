@@ -106,7 +106,21 @@ public class User {
                                     address, age, gender, nextApp, prevApp, prescriptions);
                             p.CreateDashboard();
                         }
+                        
+                        if (id.charAt(0) == 'S')
+                        { 
+                            fName = scan.nextLine();
+                            sName = scan.nextLine();
+                            address = scan.nextLine();
+                            gender = (scan.nextLine().charAt(0));
+                            age = Integer.parseInt(scan.nextLine());
+                            
+                            Secretary s = new Secretary(id, password, fName, sName,
+                                    address, age, gender);
+                            s.CreateDashboard();
+                        }
                         break;
+                        
                     }
                 }
             }
