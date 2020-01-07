@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import static java.lang.System.console;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,10 +26,12 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
     public SecretaryDashboard() {
         initComponents();
         GetRequests();
+        GetDeleteRequests();
     }
     
     public void GetRequests()
     {
+        boolean found = false;
         try {
             File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
@@ -41,7 +42,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             {
                 
          
-                if (scan.nextLine().equals("AccRequest"))
+                if (scan.nextLine().equals("AccRequest") && found == false)
                 {
                     txt_password.setText(scan.nextLine());
                     txt_fName.setText(scan.nextLine());
@@ -49,14 +50,57 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                     txt_address.setText(scan.nextLine());
                     txt_age.setText(scan.nextLine());
                     txt_gender.setText(scan.nextLine());
-                    
+                    found = true;
                 }
                 
+            }
+            if (found == false)
+            {
+                    txt_password.setText("No Requests");
+                    txt_fName.setText("No Requests");
+                    txt_sName.setText("No Requests");
+                    txt_address.setText("No Requests");
+                    txt_age.setText("No Requests");
+                    txt_gender.setText("No Requests");
             }
             scan.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Secretary.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+        
+    public void GetDeleteRequests()
+    {
+        boolean found = false;
+        try {
+            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+            Scanner scan;
+            
+            scan = new Scanner(textFile);
+            
+            while(scan.hasNextLine())
+            {
+                if (scan.nextLine().equals("DeleteRequest") && found == false)
+                {
+                    txt_reqDelID.setText(scan.nextLine());
+                    scan.nextLine();
+                    txt_reqDelFName.setText(scan.nextLine());
+                    txt_reqDelSName.setText(scan.nextLine());
+                    found = true;
+                }
+                
+            }
+            if (found == false)
+            {
+                txt_reqDelID.setText("No Requests");
+                txt_reqDelFName.setText("No Requests");
+                txt_reqDelSName.setText("No Requests");
+            }
+            scan.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Secretary.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }
     
@@ -111,22 +155,34 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         btn_approve = new javax.swing.JButton();
         btn_reject = new javax.swing.JButton();
         txt_sName = new javax.swing.JTextField();
+        lbl_delAcc = new javax.swing.JLabel();
+        txt_delAccID = new javax.swing.JTextField();
+        btn_delAccDelete = new javax.swing.JButton();
+        lbl_delAccID = new javax.swing.JLabel();
+        lbl_reqDel = new javax.swing.JLabel();
+        lbl_reqDelName = new javax.swing.JLabel();
+        txt_reqDelFName = new javax.swing.JTextField();
+        txt_reqDelSName = new javax.swing.JTextField();
+        lbl_reqDelID = new javax.swing.JLabel();
+        txt_reqDelID = new javax.swing.JTextField();
+        btn_reqDelApprove = new javax.swing.JButton();
+        btn_reqDelReject = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Accout Requests:");
 
         txt_fName.setEditable(false);
-        txt_fName.setText("jTextField1");
+        txt_fName.setText("No Requests");
 
         txt_address.setEditable(false);
-        txt_address.setText("jTextField1");
+        txt_address.setText("No Requests");
 
         txt_age.setEditable(false);
-        txt_age.setText("jTextField3");
+        txt_age.setText("No Requests");
 
         txt_gender.setEditable(false);
-        txt_gender.setText("jTextField4");
+        txt_gender.setText("No Requests");
 
         jLabel2.setText("Name:");
 
@@ -139,7 +195,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         jLabel6.setText("Password:");
 
         txt_password.setEditable(false);
-        txt_password.setText("jTextField4");
+        txt_password.setText("No Requests");
 
         btn_approve.setText("Approve");
         btn_approve.setName(""); // NOI18N
@@ -158,7 +214,50 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         });
 
         txt_sName.setEditable(false);
-        txt_sName.setText("jTextField1");
+        txt_sName.setText("No Requests");
+
+        lbl_delAcc.setText("Delete Accounts:");
+
+        txt_delAccID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_delAccIDActionPerformed(evt);
+            }
+        });
+
+        btn_delAccDelete.setText("Delete");
+
+        lbl_delAccID.setText("ID");
+
+        lbl_reqDel.setText("Requests to Delete:");
+
+        lbl_reqDelName.setText("Name:");
+
+        txt_reqDelFName.setEditable(false);
+        txt_reqDelFName.setText("No Requests");
+
+        txt_reqDelSName.setEditable(false);
+        txt_reqDelSName.setText("No Requests");
+
+        lbl_reqDelID.setText("ID:");
+
+        txt_reqDelID.setEditable(false);
+        txt_reqDelID.setText("No Requests");
+
+        btn_reqDelApprove.setText("Approve");
+        btn_reqDelApprove.setName(""); // NOI18N
+        btn_reqDelApprove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reqDelApproveActionPerformed(evt);
+            }
+        });
+
+        btn_reqDelReject.setText("Reject");
+        btn_reqDelReject.setName(""); // NOI18N
+        btn_reqDelReject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reqDelRejectActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,21 +276,48 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_address, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_age, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txt_fName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_sName, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txt_fName, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_sName, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txt_age, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addComponent(txt_gender, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_reqDelApprove)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(btn_approve)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_reject)))
-                .addContainerGap(564, Short.MAX_VALUE))
+                        .addComponent(btn_reqDelReject))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_reqDelName, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_reqDelID, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_reqDelFName, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                                    .addComponent(txt_reqDelID))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_reqDelSName, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbl_reqDel, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_delAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbl_delAccID, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_delAccID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_delAccDelete))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_approve)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_reject)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +347,31 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(btn_approve)
                     .addComponent(btn_reject))
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbl_reqDel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_reqDelFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_reqDelName)
+                            .addComponent(txt_reqDelSName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_reqDelID)
+                            .addComponent(txt_reqDelID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbl_delAcc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_delAccID)
+                            .addComponent(txt_delAccID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_delAccDelete))))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_reqDelApprove)
+                    .addComponent(btn_reqDelReject))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -243,22 +393,25 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             
             scan.close();
             
-            String[] data = new String[lineCount + 2];
+            String[] data = new String[lineCount + 3];
             scan = new Scanner(textFile);
             int i = 0;
-            
+            boolean found = false;
             while(scan.hasNextLine())
             {
                 data[i] = scan.nextLine();
-                if (data[i].equals("AccRequest"))
+                if (data[i].equals("AccRequest") && found == false)
                 {
+                    found = true;
                     data[i] = GenerateID();
                     for (int j = 0; j < 6; j++) {
                     i++;
                     data[i] = scan.nextLine();
                     }
                     i++;
-                    data[i] = "CurrentPrescriptions";
+                    data[i] = "No Appointments";
+                    i++;
+                    data[i] = "CurrentPrescription";
                     i++;
                     data[i] = "End";
                 }
@@ -285,19 +438,265 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            
-            
-            
-            
-            
-            
-            
+        GetRequests();
+                
     }//GEN-LAST:event_btn_approveActionPerformed
 
     private void btn_rejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rejectActionPerformed
-        // TODO add your handling code here:
+        try {
+            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+            Scanner scan;
+            
+            scan = new Scanner(textFile);
+            int lineCount = 0;
+            
+            while(scan.hasNextLine())
+            {
+                scan.nextLine();
+                lineCount++;
+            }
+            
+            scan.close();
+            
+            String[] data = new String[lineCount - 6];
+            scan = new Scanner(textFile);
+            int i = 0;
+            boolean found = false;
+            while(scan.hasNextLine())
+            {
+                data[i] = scan.nextLine();
+                if (data[i].equals("AccRequest") && found == false)
+                {
+                    found = true;
+                    for (int j = 0; j < 6; j++) {
+                        scan.nextLine();
+                    }
+                    if (scan.hasNextLine() == true) {
+                        data[i] = scan.nextLine();
+                    }
+                    else{
+                        data[i] = "";
+                    }
+
+                }
+                i++;
+            }
+            
+            scan.close();
+            
+            try {
+                FileWriter write = new FileWriter(textFile, false);
+                write.flush();
+                for (int j = 0; j < data.length; j++) {
+                    write.write(data[j]);
+                    System.out.println(data[j]);
+                    write.write(System.getProperty( "line.separator" ));
+                }
+                write.close();
+                
+                
+            } catch (IOException ex) {
+                Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            GetRequests();
     }//GEN-LAST:event_btn_rejectActionPerformed
+
+    private void btn_reqDelApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reqDelApproveActionPerformed
+        try {
+            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+            Scanner scan;
+            
+            scan = new Scanner(textFile);
+            int lineCount = 0;
+            
+            while(scan.hasNextLine())
+            {
+                scan.nextLine();
+                lineCount++;
+            }
+            
+            scan.close();
+            
+            String[] data = new String[lineCount];
+            scan = new Scanner(textFile);
+            int i = 0;
+            boolean found = false;
+            while(scan.hasNextLine())
+            {
+                data[i] = scan.nextLine();
+                if (data[i].equals("DeleteRequest") && found == false)
+                {
+                    int delLines = 1;
+                    found = true;
+                    while(!(scan.nextLine().equals("End")))
+                    {
+                       delLines++;
+                    }
+                    String[] temp = new String[i];
+                    temp = data;
+                    data = new String[lineCount - delLines];
+                    for (int j = 0; j < i; j++) {
+                        data[j] = temp[j];
+                    }
+                    if (scan.hasNextLine() == true) {
+                        data[i] = scan.nextLine();
+                    }
+                    else{
+                        data[i] = "";
+                    }
+
+                }
+                i++;
+            }
+            
+            scan.close();
+            
+            try {
+                FileWriter write = new FileWriter(textFile, false);
+                write.flush();
+                for (int j = 0; j < data.length; j++) {
+                    write.write(data[j]);
+                    System.out.println(data[j]);
+                    write.write(System.getProperty( "line.separator" ));
+                }
+                write.close();
+                
+                
+            } catch (IOException ex) {
+                Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            GetDeleteRequests();
+    }//GEN-LAST:event_btn_reqDelApproveActionPerformed
+
+    private void btn_reqDelRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reqDelRejectActionPerformed
+                try {
+            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+            Scanner scan;
+            
+            scan = new Scanner(textFile);
+            int lineCount = 0;
+            
+            while(scan.hasNextLine())
+            {
+                scan.nextLine();
+                lineCount++;
+            }
+            
+            scan.close();
+            
+            String[] data = new String[lineCount - 1];
+            scan = new Scanner(textFile);
+            int i = 0;
+            boolean found = false;
+            while(scan.hasNextLine())
+            {
+                data[i] = scan.nextLine();
+                if (data[i].equals("DeleteRequest") && found == false)
+                {
+                    found = true;
+                    data[i] = scan.nextLine();
+
+                }
+                i++;
+            }
+            
+            scan.close();
+            
+            try {
+                FileWriter write = new FileWriter(textFile, false);
+                write.flush();
+                for (int j = 0; j < data.length; j++) {
+                    write.write(data[j]);
+                    System.out.println(data[j]);
+                    write.write(System.getProperty( "line.separator" ));
+                }
+                write.close();
+                
+                
+            } catch (IOException ex) {
+                Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            GetDeleteRequests();
+    }//GEN-LAST:event_btn_reqDelRejectActionPerformed
+
+    private void txt_delAccIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_delAccIDActionPerformed
+                try {
+            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+            Scanner scan;
+            
+            scan = new Scanner(textFile);
+            int lineCount = 0;
+            
+            while(scan.hasNextLine())
+            {
+                scan.nextLine();
+                lineCount++;
+            }
+            
+            scan.close();
+            
+            String[] data = new String[lineCount];
+            scan = new Scanner(textFile);
+            int i = 0;
+            boolean found = false;
+            while(scan.hasNextLine())
+            {
+                data[i] = scan.nextLine();
+                if (data[i].equals(txt_delAccID.getText()) && found == false)
+                {
+                    int delLines = 1;
+                    found = true;
+                    while(!(scan.nextLine().equals("End")))
+                    {
+                       delLines++;
+                    }
+                    String[] temp = new String[i];
+                    temp = data;
+                    data = new String[lineCount - delLines];
+                    for (int j = 0; j < i; j++) {
+                        data[j] = temp[j];
+                    }
+                    if (scan.hasNextLine() == true) {
+                        data[i] = scan.nextLine();
+                    }
+                    else{
+                        data[i] = "";
+                    }
+
+                }
+                i++;
+            }
+            
+            scan.close();
+            
+            try {
+                FileWriter write = new FileWriter(textFile, false);
+                write.flush();
+                for (int j = 0; j < data.length; j++) {
+                    write.write(data[j]);
+                    System.out.println(data[j]);
+                    write.write(System.getProperty( "line.separator" ));
+                }
+                write.close();
+                
+                
+            } catch (IOException ex) {
+                Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            GetDeleteRequests();
+    }//GEN-LAST:event_txt_delAccIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -336,18 +735,30 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_approve;
+    private javax.swing.JButton btn_delAccDelete;
     private javax.swing.JButton btn_reject;
+    private javax.swing.JButton btn_reqDelApprove;
+    private javax.swing.JButton btn_reqDelReject;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lbl_delAcc;
+    private javax.swing.JLabel lbl_delAccID;
+    private javax.swing.JLabel lbl_reqDel;
+    private javax.swing.JLabel lbl_reqDelID;
+    private javax.swing.JLabel lbl_reqDelName;
     private javax.swing.JTextField txt_address;
     private javax.swing.JTextField txt_age;
+    private javax.swing.JTextField txt_delAccID;
     private javax.swing.JTextField txt_fName;
     private javax.swing.JTextField txt_gender;
     private javax.swing.JTextField txt_password;
+    private javax.swing.JTextField txt_reqDelFName;
+    private javax.swing.JTextField txt_reqDelID;
+    private javax.swing.JTextField txt_reqDelSName;
     private javax.swing.JTextField txt_sName;
     // End of variables declaration//GEN-END:variables
 }

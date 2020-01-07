@@ -5,6 +5,13 @@
  */
 package guis;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
@@ -13,6 +20,7 @@ import javax.swing.DefaultListModel;
  */
 public class PatientDashboard extends javax.swing.JFrame {
 
+    private String id;
     /**
      * Creates new form PatientDashboard
      */
@@ -21,16 +29,17 @@ public class PatientDashboard extends javax.swing.JFrame {
         
     }
     
-    public void showInfo(String nextApp, String[] appHistory, String[] prescription)
+    public void showInfo(String nextApp, String[] appHistory, String[] prescription, String parentID)
     {
-        jTextAreaNextApp.setText(nextApp);
+        id = parentID;
+        txa_nextApp.setText(nextApp);
         
         DefaultListModel listHistory;
         listHistory = new DefaultListModel();
         for (int i = 0; i < appHistory.length; i++) {
             listHistory.addElement(appHistory[i]);
         }
-        jListHistory.setModel(listHistory);
+        lst_history.setModel(listHistory);
         
         DefaultListModel listPrescription;
         listPrescription = new DefaultListModel();
@@ -51,7 +60,7 @@ public class PatientDashboard extends javax.swing.JFrame {
             }
                 
         }
-        jListPrescriptions.setModel(listPrescription);
+        lst_prescription.setModel(listPrescription);
 
     }
 
@@ -65,16 +74,16 @@ public class PatientDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaNextApp = new javax.swing.JTextArea();
-        jButtonApp = new javax.swing.JButton();
+        txa_nextApp = new javax.swing.JTextArea();
+        btn_app = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jListPrescriptions = new javax.swing.JList<>();
+        lst_prescription = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jListHistory = new javax.swing.JList<>();
-        jButtonDelete = new javax.swing.JButton();
-        jSliderRate = new javax.swing.JSlider();
-        jLabelWelcome = new javax.swing.JLabel();
-        jLabelRate = new javax.swing.JLabel();
+        lst_history = new javax.swing.JList<>();
+        btn_accDel = new javax.swing.JButton();
+        sdr_rate = new javax.swing.JSlider();
+        lbl_welcome = new javax.swing.JLabel();
+        lbl_rate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,53 +91,58 @@ public class PatientDashboard extends javax.swing.JFrame {
         jScrollPane1.setHorizontalScrollBar(null);
         jScrollPane1.setName("txt_nextApp\n"); // NOI18N
 
-        jTextAreaNextApp.setColumns(20);
-        jTextAreaNextApp.setRows(5);
-        jTextAreaNextApp.setText("Your Next appointment will appear here...");
-        jTextAreaNextApp.setMaximumSize(new java.awt.Dimension(333, 333));
-        jTextAreaNextApp.setName("txt_nextApp"); // NOI18N
-        jScrollPane1.setViewportView(jTextAreaNextApp);
+        txa_nextApp.setColumns(20);
+        txa_nextApp.setRows(5);
+        txa_nextApp.setText("Your Next appointment will appear here...");
+        txa_nextApp.setMaximumSize(new java.awt.Dimension(333, 333));
+        txa_nextApp.setName("txt_nextApp"); // NOI18N
+        jScrollPane1.setViewportView(txa_nextApp);
 
-        jButtonApp.setLabel("Request Appointment");
-        jButtonApp.setName("btn_requestApp"); // NOI18N
-        jButtonApp.addActionListener(new java.awt.event.ActionListener() {
+        btn_app.setLabel("Request Appointment");
+        btn_app.setName("btn_requestApp"); // NOI18N
+        btn_app.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAppActionPerformed(evt);
+                btn_appActionPerformed(evt);
             }
         });
 
         jScrollPane2.setName("lst_Prescriptions"); // NOI18N
 
-        jListPrescriptions.setModel(new javax.swing.AbstractListModel<String>() {
+        lst_prescription.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Current Prescriptions" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jListPrescriptions);
+        jScrollPane2.setViewportView(lst_prescription);
 
-        jListHistory.setModel(new javax.swing.AbstractListModel<String>() {
+        lst_history.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Appointment History" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jListHistory.setName("lst_appHistory"); // NOI18N
-        jScrollPane3.setViewportView(jListHistory);
+        lst_history.setName("lst_appHistory"); // NOI18N
+        jScrollPane3.setViewportView(lst_history);
 
-        jButtonDelete.setText("Delete Account");
-        jButtonDelete.setName("btn_delete"); // NOI18N
+        btn_accDel.setText("Delete Account");
+        btn_accDel.setName("btn_delete"); // NOI18N
+        btn_accDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_accDelActionPerformed(evt);
+            }
+        });
 
-        jSliderRate.setMaximum(10);
-        jSliderRate.setPaintLabels(true);
-        jSliderRate.setPaintTicks(true);
-        jSliderRate.setSnapToTicks(true);
-        jSliderRate.setValue(5);
-        jSliderRate.setName("sld_rate"); // NOI18N
+        sdr_rate.setMaximum(10);
+        sdr_rate.setPaintLabels(true);
+        sdr_rate.setPaintTicks(true);
+        sdr_rate.setSnapToTicks(true);
+        sdr_rate.setValue(5);
+        sdr_rate.setName("sld_rate"); // NOI18N
 
-        jLabelWelcome.setText("Welcome Back...");
-        jLabelWelcome.setName("lbl_title"); // NOI18N
+        lbl_welcome.setText("Welcome Back...");
+        lbl_welcome.setName("lbl_title"); // NOI18N
 
-        jLabelRate.setText("Rate this doctor");
-        jLabelRate.setName("lbl_rate"); // NOI18N
+        lbl_rate.setText("Rate this doctor");
+        lbl_rate.setName("lbl_rate"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,50 +156,114 @@ public class PatientDashboard extends javax.swing.JFrame {
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jButtonApp))
+                                .addComponent(btn_app))
                             .addComponent(jScrollPane3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButtonDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jSliderRate, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                                .addComponent(btn_accDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(sdr_rate, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                                 .addComponent(jScrollPane2))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelRate)
+                                .addComponent(lbl_rate)
                                 .addGap(12, 12, 12))))
-                    .addComponent(jLabelWelcome))
+                    .addComponent(lbl_welcome))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(jLabelWelcome)
+                .addComponent(lbl_welcome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonApp)))
+                        .addComponent(btn_app)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelRate)
+                        .addComponent(lbl_rate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSliderRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(sdr_rate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
-                        .addComponent(jButtonDelete)))
+                        .addComponent(btn_accDel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAppActionPerformed
+    private void btn_appActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_appActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAppActionPerformed
+    }//GEN-LAST:event_btn_appActionPerformed
+
+    private void btn_accDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accDelActionPerformed
+        try {
+            boolean pending = false;
+            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+            Scanner scan;
+            
+            scan = new Scanner(textFile);
+            int lineCount = 0;
+            
+            while(scan.hasNextLine())
+            {
+                if(scan.nextLine().equals("DeleteRequest"))
+                {
+                    if (scan.nextLine().equals(id))
+                    {
+                        pending = true;
+                    }
+                    lineCount++;
+                }
+                lineCount++;
+            }
+            
+            scan.close();
+            if(pending == false){
+                String[] data = new String[lineCount + 1];
+                scan = new Scanner(textFile);
+                int i = 0;
+
+                while(scan.hasNextLine())
+                {
+                    data[i] = scan.nextLine();
+                    if (data[i].equals(id))
+                    {
+                        data[i + 1] = data[i];
+                        data[i] = "DeleteRequest";
+                        i++;
+                    }
+                    i++;
+                }
+
+                scan.close();
+
+                try {
+                    FileWriter write = new FileWriter(textFile, false);
+                    write.flush();
+                    for (int j = 0; j < data.length; j++) {
+                        write.write(data[j]);
+                        System.out.println(data[j]);
+                        write.write(System.getProperty( "line.separator" ));
+                    }
+                    write.close();
+
+
+                } catch (IOException ex) {
+                    Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PatientDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+    }//GEN-LAST:event_btn_accDelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,16 +301,16 @@ public class PatientDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonApp;
-    private javax.swing.JButton jButtonDelete;
-    private javax.swing.JLabel jLabelRate;
-    private javax.swing.JLabel jLabelWelcome;
-    private javax.swing.JList<String> jListHistory;
-    private javax.swing.JList<String> jListPrescriptions;
+    private javax.swing.JButton btn_accDel;
+    private javax.swing.JButton btn_app;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSlider jSliderRate;
-    private javax.swing.JTextArea jTextAreaNextApp;
+    private javax.swing.JLabel lbl_rate;
+    private javax.swing.JLabel lbl_welcome;
+    private javax.swing.JList<String> lst_history;
+    private javax.swing.JList<String> lst_prescription;
+    private javax.swing.JSlider sdr_rate;
+    private javax.swing.JTextArea txa_nextApp;
     // End of variables declaration//GEN-END:variables
 }

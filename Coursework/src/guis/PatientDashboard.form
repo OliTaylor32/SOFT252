@@ -31,24 +31,24 @@
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                              <Component id="jButtonApp" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_app" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButtonDelete" max="32767" attributes="0"/>
-                              <Component id="jSliderRate" alignment="0" pref="362" max="32767" attributes="0"/>
+                              <Component id="btn_accDel" max="32767" attributes="0"/>
+                              <Component id="sdr_rate" alignment="0" pref="362" max="32767" attributes="0"/>
                               <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabelRate" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_rate" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="jLabelWelcome" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl_welcome" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -58,25 +58,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-              <Component id="jLabelWelcome" min="-2" max="-2" attributes="0"/>
+              <Component id="lbl_welcome" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonApp" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_app" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jLabelRate" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_rate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jSliderRate" min="-2" max="-2" attributes="0"/>
+                      <Component id="sdr_rate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jButtonDelete" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_accDel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -99,7 +99,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextAreaNextApp">
+        <Component class="javax.swing.JTextArea" name="txa_nextApp">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -112,13 +112,13 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButtonApp">
+    <Component class="javax.swing.JButton" name="btn_app">
       <Properties>
         <Property name="label" type="java.lang.String" value="Request Appointment"/>
         <Property name="name" type="java.lang.String" value="btn_requestApp" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAppActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_appActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -131,7 +131,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jListPrescriptions">
+        <Component class="javax.swing.JList" name="lst_prescription">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="1">
@@ -152,7 +152,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jListHistory">
+        <Component class="javax.swing.JList" name="lst_history">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="1">
@@ -167,13 +167,16 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButtonDelete">
+    <Component class="javax.swing.JButton" name="btn_accDel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Delete Account"/>
         <Property name="name" type="java.lang.String" value="btn_delete" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_accDelActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JSlider" name="jSliderRate">
+    <Component class="javax.swing.JSlider" name="sdr_rate">
       <Properties>
         <Property name="maximum" type="int" value="10"/>
         <Property name="paintLabels" type="boolean" value="true"/>
@@ -183,13 +186,13 @@
         <Property name="name" type="java.lang.String" value="sld_rate" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelWelcome">
+    <Component class="javax.swing.JLabel" name="lbl_welcome">
       <Properties>
         <Property name="text" type="java.lang.String" value="Welcome Back..."/>
         <Property name="name" type="java.lang.String" value="lbl_title" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelRate">
+    <Component class="javax.swing.JLabel" name="lbl_rate">
       <Properties>
         <Property name="text" type="java.lang.String" value="Rate this doctor"/>
         <Property name="name" type="java.lang.String" value="lbl_rate" noResource="true"/>
