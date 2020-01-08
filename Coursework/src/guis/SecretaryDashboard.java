@@ -125,6 +125,50 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                     break;
                 }
             }
+            if ("ERROR".equals(id)) {
+                for (int i = 10; i < 100; i++) {
+                    free = true;
+                    while(scan.hasNextLine() == true)
+                        if (scan.nextLine().equals("P00" + Integer.toString(i))) {
+                            free = false;
+                            break;
+                        }  
+                    if (free == true) {
+                        id = "P00" + Integer.toString(i);
+                        break;
+                    }
+                }   
+            }
+            if ("ERROR".equals(id)) {
+                for (int i = 100; i < 1000; i++) {
+                    free = true;
+                    while(scan.hasNextLine() == true)
+                        if (scan.nextLine().equals("P0" + Integer.toString(i))) {
+                            free = false;
+                            break;
+                        }  
+                    if (free == true) {
+                        id = "P0" + Integer.toString(i);
+                        break;
+                    }
+                }   
+            }
+            
+            if ("ERROR".equals(id)) {
+                for (int i = 1000; i < 10000; i++) {
+                    free = true;
+                    while(scan.hasNextLine() == true)
+                        if (scan.nextLine().equals("P" + Integer.toString(i))) {
+                            free = false;
+                            break;
+                        }  
+                    if (free == true) {
+                        id = "P" + Integer.toString(i);
+                        break;
+                    }
+                }   
+            }
+
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
@@ -629,68 +673,70 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_reqDelRejectActionPerformed
 
     private void txt_delAccIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_delAccIDActionPerformed
-                try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
-            Scanner scan;
-            
-            scan = new Scanner(textFile);
-            int lineCount = 0;
-            
-            while(scan.hasNextLine())
-            {
-                scan.nextLine();
-                lineCount++;
-            }
-            
-            scan.close();
-            
-            String[] data = new String[lineCount];
-            scan = new Scanner(textFile);
-            int i = 0;
-            boolean found = false;
-            while(scan.hasNextLine())
-            {
-                data[i] = scan.nextLine();
-                if (data[i].equals(txt_delAccID.getText()) && found == false)
-                {
-                    int delLines = 1;
-                    found = true;
-                    while(!(scan.nextLine().equals("End")))
-                    {
-                       delLines++;
-                    }
-                    String[] temp = new String[i];
-                    temp = data;
-                    data = new String[lineCount - delLines];
-                    for (int j = 0; j < i; j++) {
-                        data[j] = temp[j];
-                    }
-                    if (scan.hasNextLine() == true) {
-                        data[i] = scan.nextLine();
-                    }
-                    else{
-                        data[i] = "";
-                    }
+        try {
+            if (txt_delAccID.getText().charAt(0) == 'P'){
+                File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+                Scanner scan;
 
+                scan = new Scanner(textFile);
+                int lineCount = 0;
+
+                while(scan.hasNextLine())
+                {
+                    scan.nextLine();
+                    lineCount++;
                 }
-                i++;
-            }
-            
-            scan.close();
-            
-            try {
-                FileWriter write = new FileWriter(textFile, false);
-                write.flush();
-                for (int j = 0; j < data.length; j++) {
-                    write.write(data[j]);
-                    System.out.println(data[j]);
-                    write.write(System.getProperty( "line.separator" ));
+
+                scan.close();
+
+                String[] data = new String[lineCount];
+                scan = new Scanner(textFile);
+                int i = 0;
+                boolean found = false;
+                while(scan.hasNextLine())
+                {
+                    data[i] = scan.nextLine();
+                    if (data[i].equals(txt_delAccID.getText()) && found == false)
+                    {
+                        int delLines = 1;
+                        found = true;
+                        while(!(scan.nextLine().equals("End")))
+                        {
+                           delLines++;
+                        }
+                        String[] temp = new String[i];
+                        temp = data;
+                        data = new String[lineCount - delLines];
+                        for (int j = 0; j < i; j++) {
+                            data[j] = temp[j];
+                        }
+                        if (scan.hasNextLine() == true) {
+                            data[i] = scan.nextLine();
+                        }
+                        else{
+                            data[i] = "";
+                        }
+
+                    }
+                    i++;
                 }
-                write.close();
-                
-                
-            } catch (IOException ex) {
-                Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+
+                scan.close();
+
+                try {
+                    FileWriter write = new FileWriter(textFile, false);
+                    write.flush();
+                    for (int j = 0; j < data.length; j++) {
+                        write.write(data[j]);
+                        System.out.println(data[j]);
+                        write.write(System.getProperty( "line.separator" ));
+                    }
+                    write.close();
+
+
+                } catch (IOException ex) {
+                    Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
