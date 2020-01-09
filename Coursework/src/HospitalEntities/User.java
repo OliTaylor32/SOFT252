@@ -119,8 +119,32 @@ public class User {
                                     address, age, gender);
                             s.CreateDashboard();
                         }
-                        break;
                         
+                        if (id.charAt(0) == 'D')
+                        { 
+                            fName = scan.nextLine();
+                            sName = scan.nextLine();
+                            address = scan.nextLine();
+                            gender = (scan.nextLine().charAt(0));
+                            age = Integer.parseInt(scan.nextLine());
+                            
+                            Doctor d = new Doctor(id, password, fName, sName,
+                                    address, age, gender);
+                            d.CreateDashboard();
+                        }
+                        
+                        if (id.charAt(0) == 'A')
+                        { 
+                            fName = scan.nextLine();
+                            sName = scan.nextLine();
+                            address = scan.nextLine();
+                            gender = (scan.nextLine().charAt(0));
+                            age = Integer.parseInt(scan.nextLine());
+                            
+                            Doctor d = new Doctor(id, password, fName, sName,
+                                    address, age, gender);
+                            d.CreateDashboard();
+                        }
                     }
                 }
             }

@@ -128,12 +128,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel11 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        lbl_feedbackTitle = new javax.swing.JLabel();
+        lbl_feedbackID = new javax.swing.JLabel();
+        txt_feedbackID = new javax.swing.JTextField();
+        txt_feedback = new javax.swing.JTextField();
+        lbl_feedback = new javax.swing.JLabel();
+        btn_feedbackSubmit = new javax.swing.JToggleButton();
         lbl_createAcc = new javax.swing.JLabel();
         lbl_createType = new javax.swing.JLabel();
         cbx_createType = new javax.swing.JComboBox<>();
@@ -159,13 +159,18 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Provide Feedback:");
+        lbl_feedbackTitle.setText("Provide Feedback:");
 
-        jLabel2.setText("Doctor ID:");
+        lbl_feedbackID.setText("Doctor ID:");
 
-        jLabel3.setText("Feedback:");
+        lbl_feedback.setText("Feedback:");
 
-        jToggleButton1.setText("Submit");
+        btn_feedbackSubmit.setText("Submit");
+        btn_feedbackSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_feedbackSubmitActionPerformed(evt);
+            }
+        });
 
         lbl_createAcc.setText("Create Accounts:");
 
@@ -219,12 +224,12 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbl_feedback, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(txt_feedback))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jToggleButton1))
+                                .addComponent(btn_feedbackSubmit))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbl_createFName, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -253,11 +258,11 @@ public class AdminDashboard extends javax.swing.JFrame {
                                 .addComponent(btn_createSubmit))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_feedbackTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lbl_feedbackID, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txt_feedbackID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(lbl_createAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lbl_createType, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,17 +280,17 @@ public class AdminDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lbl_feedbackTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_feedbackID)
+                    .addComponent(txt_feedbackID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(txt_feedback, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_feedback))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton1)
+                .addComponent(btn_feedbackSubmit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_createAcc)
                 .addGap(18, 18, 18)
@@ -416,6 +421,16 @@ public class AdminDashboard extends javax.swing.JFrame {
                 write.write(cbx_createGender.getItemAt(cbx_createGender.getSelectedIndex()).charAt(0));
                 write.write(System.getProperty( "line.separator" ));
                 write.write(txt_createAge.getText());
+                if (cbx_createType.getItemAt(cbx_createType.getSelectedIndex()).charAt(0) == 'P') {
+                    write.write(System.getProperty( "line.separator" ));
+                    write.write("Previous Appointments");
+                    write.write(System.getProperty( "line.separator" ));
+                    write.write("Current Prescriptions");
+                }
+                if (cbx_createType.getItemAt(cbx_createType.getSelectedIndex()).charAt(0) == 'D') {
+                    write.write(System.getProperty( "line.separator" ));
+                    write.write("No Feedback");
+                }
                 write.write(System.getProperty( "line.separator" ));
                 write.write("End");
                 write.close();
@@ -428,6 +443,68 @@ public class AdminDashboard extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btn_createSubmitActionPerformed
+
+    private void btn_feedbackSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_feedbackSubmitActionPerformed
+        if(txt_feedbackID.getText().charAt(0) == 'D'){
+            try {
+                File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+                Scanner scan;
+
+                scan = new Scanner(textFile);
+                int lineCount = 0;
+
+                while(scan.hasNextLine())
+                {
+                    scan.nextLine();
+                    lineCount++;
+                }
+
+                scan.close();
+
+                String[] data = new String[lineCount];
+                scan = new Scanner(textFile);
+                int i = 0;
+                boolean found = false;
+                while(scan.hasNextLine())
+                {
+                    data[i] = scan.nextLine();
+                    if (data[i].equals(txt_feedbackID.getText()) && found == false)
+                    {
+                        found = true;
+                        for (int j = 0; j < 6; j++) {
+                        i++;
+                        data[i] = scan.nextLine();
+                        }
+                        i++;
+                        data[i] = txt_feedback.getText();
+                        i++;
+                        data[i] = "End";
+                    }
+                    i++;
+                }
+
+                scan.close();
+
+                try {
+                    FileWriter write = new FileWriter(textFile, false);
+                    write.flush();
+                    for (int j = 0; j < data.length; j++) {
+                        write.write(data[j]);
+                        System.out.println(data[j]);
+                        write.write(System.getProperty( "line.separator" ));
+                    }
+                    write.close();
+
+
+                } catch (IOException ex) {
+                    Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btn_feedbackSubmitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -467,16 +544,11 @@ public class AdminDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btn_createSubmit;
     private javax.swing.JToggleButton btn_delAcc;
+    private javax.swing.JToggleButton btn_feedbackSubmit;
     private javax.swing.JComboBox<String> cbx_createGender;
     private javax.swing.JComboBox<String> cbx_createType;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lbl_SName;
     private javax.swing.JLabel lbl_createAcc;
     private javax.swing.JLabel lbl_createAddress;
@@ -486,11 +558,16 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_createType;
     private javax.swing.JLabel lbl_delAcc;
     private javax.swing.JLabel lbl_delID;
+    private javax.swing.JLabel lbl_feedback;
+    private javax.swing.JLabel lbl_feedbackID;
+    private javax.swing.JLabel lbl_feedbackTitle;
     private javax.swing.JTextField txt_createAddress;
     private javax.swing.JTextField txt_createAge;
     private javax.swing.JTextField txt_createFName;
     private javax.swing.JTextField txt_createPassword;
     private javax.swing.JTextField txt_createSName;
     private javax.swing.JTextField txt_delID;
+    private javax.swing.JTextField txt_feedback;
+    private javax.swing.JTextField txt_feedbackID;
     // End of variables declaration//GEN-END:variables
 }
