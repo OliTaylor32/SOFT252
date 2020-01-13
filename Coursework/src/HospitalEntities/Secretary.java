@@ -17,18 +17,18 @@ import java.util.logging.Logger;
  * @author Oli
  */
 public class Secretary extends User{
-    
+    //Constructor
     public Secretary(String newID, String newPassword, String newFname,
            String newSname, String newAddress, int newAge, char newGender)
     {
         super(newID, newPassword, newFname, newSname, newAddress, newAge, newGender);
             
     }
-    
+    //Create a GUI for the user to access functionality
     public void CreateDashboard(){
         SecretaryDashboard window = new SecretaryDashboard();
         window.setVisible(true);
-        window.GetRequests();
+        window.GetRequests(); //Make sure the user is shown any new account requests on load.
     }
     
 }

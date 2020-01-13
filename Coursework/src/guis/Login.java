@@ -108,7 +108,7 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Check to see if the user can log-in using the credentials provided.
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String id = jTextField1.getText();
         String pass = new String(jPasswordField1.getPassword());

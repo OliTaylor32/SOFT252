@@ -5,7 +5,6 @@
  */
 package HospitalEntities;
 
-import guis.PatientDashboard;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,13 +25,16 @@ public class User {
     protected String address;
     protected int age;
     protected char gender;
+    private File textFile = new File("test/Data.txt");
+    
    
+    //Constructor1 (Created when log in attempted
     public User(String newID, String newPass)
     {
         id = newID;
         password = newPass;
     }
-    
+    //Constructor2
     public User(String newID, String newPass, String newFname, String newSname,
         String newAddress, int newAge, char newGender)
     {
@@ -48,18 +50,17 @@ public class User {
     public void Login ()
     {
         boolean valid = false;
-        File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
         Scanner scan;
         try 
         {
             scan = new Scanner(textFile);
             
-            while(scan.hasNextLine())
+            while(scan.hasNextLine()) //Try until all lines have been checked
             {
-                if (scan.nextLine().equals(id)) {
+                if (scan.nextLine().equals(id)) { //If the ID exists and the password asociated matches.
                     if (scan.nextLine().equals(password)) {
                         valid = true;
-                        if (id.charAt(0) == 'P')
+                        if (id.charAt(0) == 'P') //If it's a patient, get nessasary data and create a Patient object
                         { 
                             fName = scan.nextLine();
                             sName = scan.nextLine();
@@ -104,10 +105,10 @@ public class User {
                             }
                             Patient p = new Patient(id, password, fName, sName,
                                     address, age, gender, nextApp, prevApp, prescriptions);
-                            p.CreateDashboard();
+                            p.CreateDashboard(); //Get the patient object to create a GUI for the functions
                         }
                         
-                        if (id.charAt(0) == 'S')
+                        if (id.charAt(0) == 'S') //If it's a Secretary, get nessasary data and create a Secretary object
                         { 
                             fName = scan.nextLine();
                             sName = scan.nextLine();
@@ -117,10 +118,10 @@ public class User {
                             
                             Secretary s = new Secretary(id, password, fName, sName,
                                     address, age, gender);
-                            s.CreateDashboard();
+                            s.CreateDashboard(); //Get the patient object to create a GUI for the functions
                         }
                         
-                        if (id.charAt(0) == 'D')
+                        if (id.charAt(0) == 'D') //If it's a Doctor, get nessasary data and create a Doctor object
                         { 
                             fName = scan.nextLine();
                             sName = scan.nextLine();
@@ -130,10 +131,10 @@ public class User {
                             
                             Doctor d = new Doctor(id, password, fName, sName,
                                     address, age, gender);
-                            d.CreateDashboard();
+                            d.CreateDashboard(); //Get the Doctor object to create a GUI for the functions
                         }
                         
-                        if (id.charAt(0) == 'A')
+                        if (id.charAt(0) == 'A') //If it's a Admin, get nessasary data and create an Admin object
                         { 
                             fName = scan.nextLine();
                             sName = scan.nextLine();
@@ -141,9 +142,9 @@ public class User {
                             gender = (scan.nextLine().charAt(0));
                             age = Integer.parseInt(scan.nextLine());
                             
-                            Doctor d = new Doctor(id, password, fName, sName,
+                            Admin a = new Admin(id, password, fName, sName,
                                     address, age, gender);
-                            d.CreateDashboard();
+                            a.CreateDashboard(); //Get the Admin object to create a GUI for the functions
                         }
                     }
                 }
@@ -157,21 +158,8 @@ public class User {
         
         System.out.println(valid);
         
-        //Check forID
-            //If there check for password
-                //If it matches Get all other data
-                //and create the correct subclass 
-                //and construct it using that data
-                //close this window and open correct
-                //Dashboard
-        //else pop-up window saying incorrect id/password
-        //close textfile screen.
     }
-    
-    private void CreateAcc()
-    {
-        //Hide this window and open create account window
-    }
+
     
     
     

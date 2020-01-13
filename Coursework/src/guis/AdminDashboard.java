@@ -19,13 +19,14 @@ import java.util.logging.Logger;
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
+    private File textFile = new File("test/Data.txt");
     /**
      * Creates new form AdminDashboard
      */
     public AdminDashboard() {
         initComponents();
     }
-    
+    //Return a unique user ID by checking file for one that isn't in use, and iterating until it finds one.
     private String GenerateID()
     {
         String id = "ERROR";
@@ -51,7 +52,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
         
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan = new Scanner(textFile);
             boolean free = true;
             id = "P";
@@ -231,14 +231,6 @@ public class AdminDashboard extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btn_feedbackSubmit))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_createFName, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_createFName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbl_SName, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_createSName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbl_createAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_createAddress))
@@ -264,16 +256,26 @@ public class AdminDashboard extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txt_feedbackID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(lbl_createAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbl_createType, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbx_createType, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(lbl_delAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lbl_delID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txt_delID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lbl_createType, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbx_createType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(lbl_createFName, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_createFName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_SName, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_createSName, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -331,10 +333,9 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Delete an account by finding the ID in the text file, and then deleting all information of that account
     private void btn_delAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delAccActionPerformed
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
@@ -369,7 +370,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     for (int j = 0; j < i; j++) {
                         data[j] = temp[j];
                     }
-                    if (scan.hasNextLine() == true) {
+                    if (scan.hasNextLine()) {
                         data[i] = scan.nextLine();
                     }
                     else{
@@ -381,11 +382,11 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
             
             scan.close();
-            
+            //Overwrite the textfile with the new data
             try {
                 FileWriter write = new FileWriter(textFile, false);
                 write.flush();
-                for (int j = 0; j < data.length; j++) {
+                for (int j = 0; j < data.length - 1; j++) {
                     write.write(data[j]);
                     System.out.println(data[j]);
                     write.write(System.getProperty( "line.separator" ));
@@ -400,10 +401,9 @@ public class AdminDashboard extends javax.swing.JFrame {
             Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_delAccActionPerformed
-
+    //Create a new account by appending the textfile with the accounts data
     private void btn_createSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_createSubmitActionPerformed
 
-        File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
         try
         {
             try (FileWriter write = new FileWriter(textFile, true)) {
@@ -423,9 +423,11 @@ public class AdminDashboard extends javax.swing.JFrame {
                 write.write(txt_createAge.getText());
                 if (cbx_createType.getItemAt(cbx_createType.getSelectedIndex()).charAt(0) == 'P') {
                     write.write(System.getProperty( "line.separator" ));
+                    write.write("No Appointments");
+                    write.write(System.getProperty( "line.separator" ));
                     write.write("Previous Appointments");
                     write.write(System.getProperty( "line.separator" ));
-                    write.write("Current Prescriptions");
+                    write.write("CurrentPrescription");
                 }
                 if (cbx_createType.getItemAt(cbx_createType.getSelectedIndex()).charAt(0) == 'D') {
                     write.write(System.getProperty( "line.separator" ));
@@ -443,11 +445,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btn_createSubmitActionPerformed
-
+    //Post feedback to doctor by finding location of old feedback and replacing it
     private void btn_feedbackSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_feedbackSubmitActionPerformed
         if(txt_feedbackID.getText().charAt(0) == 'D'){
             try {
-                File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
                 Scanner scan;
 
                 scan = new Scanner(textFile);
@@ -477,14 +478,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                         }
                         i++;
                         data[i] = txt_feedback.getText();
-                        i++;
-                        data[i] = "End";
+                        scan.nextLine();
                     }
                     i++;
                 }
 
                 scan.close();
-
+                //Overwrite the textfile with the new data
                 try {
                     FileWriter write = new FileWriter(textFile, false);
                     write.flush();

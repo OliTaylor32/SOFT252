@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  * @author Oli
  */
 public class CreateAcc extends javax.swing.JFrame {
+    private File textFile = new File("test/Data.txt");
 
     /**
      * Creates new form CreateAcc
@@ -214,7 +215,7 @@ public class CreateAcc extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_genderActionPerformed
 
     private void btn_requestAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_requestAccActionPerformed
-        File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+        //write the newly inputted data to the data file in the correct format, marking it as a request for the scretary to find
         try
         {
             try (FileWriter write = new FileWriter(textFile, true)) {

@@ -20,6 +20,7 @@ import javax.swing.DefaultListModel;
  */
 public class PatientDashboard extends javax.swing.JFrame {
 
+    private File textFile = new File("test/Data.txt");
     private String id;
     /**
      * Creates new form PatientDashboard
@@ -28,7 +29,7 @@ public class PatientDashboard extends javax.swing.JFrame {
         initComponents();
         
     }
-    
+    //Show the patient their next appointment, previous appointments and Prescriptions
     public void showInfo(String nextApp, String[] appHistory, String[] prescription, String parentID)
     {
         id = parentID;
@@ -75,15 +76,12 @@ public class PatientDashboard extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         txa_nextApp = new javax.swing.JTextArea();
-        btn_app = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lst_prescription = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         lst_history = new javax.swing.JList<>();
         btn_accDel = new javax.swing.JButton();
-        sdr_rate = new javax.swing.JSlider();
         lbl_welcome = new javax.swing.JLabel();
-        lbl_rate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,14 +95,6 @@ public class PatientDashboard extends javax.swing.JFrame {
         txa_nextApp.setMaximumSize(new java.awt.Dimension(333, 333));
         txa_nextApp.setName("txt_nextApp"); // NOI18N
         jScrollPane1.setViewportView(txa_nextApp);
-
-        btn_app.setLabel("Request Appointment");
-        btn_app.setName("btn_requestApp"); // NOI18N
-        btn_app.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_appActionPerformed(evt);
-            }
-        });
 
         jScrollPane2.setName("lst_Prescriptions"); // NOI18N
 
@@ -131,18 +121,8 @@ public class PatientDashboard extends javax.swing.JFrame {
             }
         });
 
-        sdr_rate.setMaximum(10);
-        sdr_rate.setPaintLabels(true);
-        sdr_rate.setPaintTicks(true);
-        sdr_rate.setSnapToTicks(true);
-        sdr_rate.setValue(5);
-        sdr_rate.setName("sld_rate"); // NOI18N
-
         lbl_welcome.setText("Welcome Back...");
         lbl_welcome.setName("lbl_title"); // NOI18N
-
-        lbl_rate.setText("Rate this doctor");
-        lbl_rate.setName("lbl_rate"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,19 +134,11 @@ public class PatientDashboard extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(btn_app))
                             .addComponent(jScrollPane3))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btn_accDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(sdr_rate, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lbl_rate)
-                                .addGap(12, 12, 12))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_accDel, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)))
                     .addComponent(lbl_welcome))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -178,33 +150,20 @@ public class PatientDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_app)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_rate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sdr_rate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(btn_accDel)))
+                    .addComponent(btn_accDel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_appActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_appActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_appActionPerformed
-
+    //Request this account to be deleted by the secretary, can still be accesed but not requested twice at once.
     private void btn_accDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accDelActionPerformed
         try {
             boolean pending = false;
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
@@ -302,15 +261,12 @@ public class PatientDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_accDel;
-    private javax.swing.JButton btn_app;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lbl_rate;
     private javax.swing.JLabel lbl_welcome;
     private javax.swing.JList<String> lst_history;
     private javax.swing.JList<String> lst_prescription;
-    private javax.swing.JSlider sdr_rate;
     private javax.swing.JTextArea txa_nextApp;
     // End of variables declaration//GEN-END:variables
 }

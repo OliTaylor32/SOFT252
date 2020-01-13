@@ -16,6 +16,7 @@ public class Patient extends User{
     private String[] appHistory;
     private String[] prescription;
     
+    //Constructor
     public Patient(String newID, String newPassword, String newFname,
            String newSname, String newAddress, int newAge, char newGender, 
            String newNextApp, String[] newAppHistory, String[] newPerscription){
@@ -27,7 +28,7 @@ public class Patient extends User{
         
     }
     
-    public void CreateDashboard()
+    public void CreateDashboard() 
     {
         PatientDashboard window = new PatientDashboard();
         window.setVisible(true);

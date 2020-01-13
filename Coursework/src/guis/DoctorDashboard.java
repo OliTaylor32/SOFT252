@@ -5,6 +5,7 @@
  */
 package guis;
 
+import HospitalEntities.Doctor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -20,7 +21,10 @@ import javax.swing.DefaultListModel;
  */
 public class DoctorDashboard extends javax.swing.JFrame {
 
+    private Doctor parent;
     private String name;
+    private String id;
+    private File textFile = new File("test/Data.txt");
     /**
      * Creates new form DoctorDashboard
      */
@@ -28,8 +32,14 @@ public class DoctorDashboard extends javax.swing.JFrame {
         initComponents();
     }
     
-    public void SetName(String fName, String sName){
-        name = (fName + " " +sName);
+    public void SetDoctor(Doctor doctor){
+        name = (doctor.GetFName() + " " + doctor.GetSName());
+        id = doctor.GetID();
+        parent = doctor;
+    }
+    
+    public void ShowFeedback(){
+        txt_feedback.setText(parent.GetFeedback());
     }
 
     /**
@@ -68,6 +78,8 @@ public class DoctorDashboard extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lst_history = new javax.swing.JList<>();
         btn_historySearch = new javax.swing.JButton();
+        lbl_feedback = new javax.swing.JLabel();
+        txt_feedback = new javax.swing.JTextField();
 
         jLabel5.setText("jLabel5");
 
@@ -122,6 +134,12 @@ public class DoctorDashboard extends javax.swing.JFrame {
             }
         });
 
+        lbl_feedback.setText("Feedback:");
+        lbl_feedback.setToolTipText("");
+
+        txt_feedback.setEditable(false);
+        txt_feedback.setText("Feedback");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,6 +147,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_feedback)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbl_preNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,7 +159,17 @@ public class DoctorDashboard extends javax.swing.JFrame {
                             .addComponent(btn_preSubmit, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_app, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbl_historyID, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_historyID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(btn_historySearch)))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbl_appID, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -149,7 +178,6 @@ public class DoctorDashboard extends javax.swing.JFrame {
                                 .addComponent(lbl_appDate, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_appDate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lbl_pre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbl_appDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,19 +202,11 @@ public class DoctorDashboard extends javax.swing.JFrame {
                                         .addComponent(lbl_preMed, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txt_preMed, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(lbl_history, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 44, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbl_historyID, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_historyID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(btn_historySearch)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(lbl_feedback, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_app, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_pre, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_history, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 44, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -235,10 +255,13 @@ public class DoctorDashboard extends javax.swing.JFrame {
                             .addComponent(lbl_historyID)
                             .addComponent(txt_historyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_historySearch)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(btn_historySearch))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_feedback)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_feedback, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
         );
 
         pack();
@@ -246,7 +269,6 @@ public class DoctorDashboard extends javax.swing.JFrame {
 
     private void btn_appSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_appSubmitActionPerformed
     try {    
-        File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
@@ -276,6 +298,12 @@ public class DoctorDashboard extends javax.swing.JFrame {
                     }
                     i++;
                     data[i] = (txt_appDate.getText() + " " + name  + ": " + txt_appDetail.getText());
+                    i++;
+                    data[i] = scan.nextLine();
+                    if ("No Appointments".equals(data[i]))
+                    {
+                        data[i] = "...";
+                    }
                 }
                 i++;
             }
@@ -304,7 +332,6 @@ public class DoctorDashboard extends javax.swing.JFrame {
 
     private void btn_preSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_preSubmitActionPerformed
     try {    
-        File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
@@ -363,7 +390,6 @@ public class DoctorDashboard extends javax.swing.JFrame {
     private void btn_historySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_historySearchActionPerformed
         if (txt_historyID.getText().charAt(0) == 'P') {
             try {
-                File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
                 Scanner scan;
                 scan = new Scanner(textFile);
                 while(scan.hasNextLine())
@@ -434,6 +460,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_appDate;
     private javax.swing.JLabel lbl_appDetail;
     private javax.swing.JLabel lbl_appID;
+    private javax.swing.JLabel lbl_feedback;
     private javax.swing.JLabel lbl_history;
     private javax.swing.JLabel lbl_historyID;
     private javax.swing.JLabel lbl_pre;
@@ -446,6 +473,7 @@ public class DoctorDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField txt_appDate;
     private javax.swing.JTextField txt_appDetail;
     private javax.swing.JTextField txt_appID;
+    private javax.swing.JTextField txt_feedback;
     private javax.swing.JTextField txt_historyID;
     private javax.swing.JTextField txt_preDosage;
     private javax.swing.JTextField txt_preID;

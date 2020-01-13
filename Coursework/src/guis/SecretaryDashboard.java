@@ -20,20 +20,20 @@ import java.util.logging.Logger;
  */
 public final class SecretaryDashboard extends javax.swing.JFrame {
 
+    private File textFile = new File("test/Data.txt");
     /**
      * Creates new form SecretaryDashboard
      */
-    public SecretaryDashboard() {
+    public SecretaryDashboard() { //On load get new account requests and delete requests shown to the user.
         initComponents();
         GetRequests();
         GetDeleteRequests();
     }
     
-    public void GetRequests()
+    public void GetRequests() //Show the next account request.
     {
         boolean found = false;
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
@@ -54,7 +54,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                 }
                 
             }
-            if (found == false)
+            if (found == false) //If there are no requests 
             {
                     txt_password.setText("No Requests");
                     txt_fName.setText("No Requests");
@@ -69,11 +69,10 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         }
     }
         
-    public void GetDeleteRequests()
+    public void GetDeleteRequests() //Show the next delete request.
     {
         boolean found = false;
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
@@ -90,7 +89,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                 }
                 
             }
-            if (found == false)
+            if (found == false) //If there are no requests 
             {
                 txt_reqDelID.setText("No Requests");
                 txt_reqDelFName.setText("No Requests");
@@ -104,20 +103,19 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
 
     }
     
-    private String GenerateID()
+    private String GenerateID() //returns the next avaliable ID slot. used when creating new accounts
     {
         String id;
         id = "ERROR";
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan = new Scanner(textFile);
             boolean free = true;
             id = "P";
             for (int i = 1; i < 10; i++) {
                 free = true;
                 while(scan.hasNextLine() == true)
-                    if (scan.nextLine().equals("P000" + Integer.toString(i))) {
-                        free = false;
+                    if (scan.nextLine().equals("P000" + Integer.toString(i))){ //ID is already in use
+                        free = false; 
                         break;
                     }  
                 if (free == true) {
@@ -125,7 +123,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                     break;
                 }
             }
-            if ("ERROR".equals(id)) {
+            if ("ERROR".equals(id)) { //If an ID still hasn't beena ssigned
                 for (int i = 10; i < 100; i++) {
                     free = true;
                     while(scan.hasNextLine() == true)
@@ -269,6 +267,11 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         });
 
         btn_delAccDelete.setText("Delete");
+        btn_delAccDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_delAccDeleteActionPerformed(evt);
+            }
+        });
 
         lbl_delAccID.setText("ID");
 
@@ -420,15 +423,15 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Create the requested account by changing "account request" with a unique ID number
     private void btn_approveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_approveActionPerformed
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
             int lineCount = 0;
             
+            //count how many lines the data file has
             while(scan.hasNextLine())
             {
                 scan.nextLine();
@@ -437,7 +440,8 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             
             scan.close();
             
-            String[] data = new String[lineCount + 3];
+            String[] data = new String[lineCount + 4]; //insert the textfile into a string array
+            //Find the first instance of an account request (And only the first)
             scan = new Scanner(textFile);
             int i = 0;
             boolean found = false;
@@ -447,13 +451,17 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
                 if (data[i].equals("AccRequest") && found == false)
                 {
                     found = true;
-                    data[i] = GenerateID();
+                    data[i] = GenerateID(); //Genrate unique Patient ID
+                    //Scan in patient data
                     for (int j = 0; j < 6; j++) {
                     i++;
-                    data[i] = scan.nextLine();
+                    data[i] = scan.nextLine(); 
                     }
+                    //Add storing headers (Allows the Patient to easily display this information is a user friendly way)
                     i++;
                     data[i] = "No Appointments";
+                    i++;
+                    data[i] = "Previous Appointments";
                     i++;
                     data[i] = "CurrentPrescription";
                     i++;
@@ -464,6 +472,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             
             scan.close();
             
+            //Write the array with changes to the text file to the textFile (Overwriting the text already inside)
             try {
                 FileWriter write = new FileWriter(textFile, false);
                 write.flush();
@@ -482,18 +491,17 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-        GetRequests();
+        GetRequests(); //Update to see if there are more requests
                 
     }//GEN-LAST:event_btn_approveActionPerformed
-
+    //Reject the request to add an account by deleting all information ties to the account request
     private void btn_rejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rejectActionPerformed
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
             int lineCount = 0;
-            
+            //Count how long the text file is
             while(scan.hasNextLine())
             {
                 scan.nextLine();
@@ -502,24 +510,24 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             
             scan.close();
             
-            String[] data = new String[lineCount - 6];
+            String[] data = new String[lineCount - 6]; //STore data in array (Shorter as its deleting data)
             scan = new Scanner(textFile);
             int i = 0;
             boolean found = false;
             while(scan.hasNextLine())
             {
                 data[i] = scan.nextLine();
-                if (data[i].equals("AccRequest") && found == false)
+                if (data[i].equals("AccRequest") && found == false) //Find the first instance of an account request (ONLY)
                 {
                     found = true;
                     for (int j = 0; j < 6; j++) {
-                        scan.nextLine();
+                        scan.nextLine(); //Skip saving data relating to the account request.
                     }
                     if (scan.hasNextLine() == true) {
-                        data[i] = scan.nextLine();
+                        data[i] = scan.nextLine(); //Overwirite "Accrequest" with the next line in the file
                     }
                     else{
-                        data[i] = "";
+                        data[i] = ""; //If this was the last line, just add a blank 
                     }
 
                 }
@@ -527,7 +535,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             }
             
             scan.close();
-            
+            //Write the array with changes to the text file to the textFile (Overwriting the text already inside)
             try {
                 FileWriter write = new FileWriter(textFile, false);
                 write.flush();
@@ -545,17 +553,16 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-            GetRequests();
+            GetRequests(); //Update to see if there are more requests
     }//GEN-LAST:event_btn_rejectActionPerformed
-
+    //Approve Delete request by removing all information associated with account in question
     private void btn_reqDelApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reqDelApproveActionPerformed
         try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
             Scanner scan;
             
             scan = new Scanner(textFile);
             int lineCount = 0;
-            
+            //Count how long the text file is
             while(scan.hasNextLine())
             {
                 scan.nextLine();
@@ -571,20 +578,23 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             while(scan.hasNextLine())
             {
                 data[i] = scan.nextLine();
-                if (data[i].equals("DeleteRequest") && found == false)
+                if (data[i].equals("DeleteRequest") && found == false) //Find the first instance of an account request (ONLY)
                 {
                     int delLines = 1;
                     found = true;
+                    //Count how many lines have been skipped
                     while(!(scan.nextLine().equals("End")))
                     {
                        delLines++;
                     }
+                    //change the lenght of the data array to fit with how many lines have been deleted.
                     String[] temp = new String[i];
                     temp = data;
                     data = new String[lineCount - delLines];
                     for (int j = 0; j < i; j++) {
                         data[j] = temp[j];
                     }
+                    //Overwirite "Delete Request" with next line or blank
                     if (scan.hasNextLine() == true) {
                         data[i] = scan.nextLine();
                     }
@@ -598,6 +608,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             
             scan.close();
             
+            //Write the array with changes to the text file to the textFile (Overwriting the text already inside)
             try {
                 FileWriter write = new FileWriter(textFile, false);
                 write.flush();
@@ -617,10 +628,9 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         }
             GetDeleteRequests();
     }//GEN-LAST:event_btn_reqDelApproveActionPerformed
-
+    //Reject a request to delete an account by taking out the "deleteRequest" line
     private void btn_reqDelRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reqDelRejectActionPerformed
-                try {
-            File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
+        try {
             Scanner scan;
             
             scan = new Scanner(textFile);
@@ -651,7 +661,7 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
             }
             
             scan.close();
-            
+            //Write the array with changes to the text file to the textFile (Overwriting the text already inside)
             try {
                 FileWriter write = new FileWriter(textFile, false);
                 write.flush();
@@ -673,9 +683,12 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_reqDelRejectActionPerformed
 
     private void txt_delAccIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_delAccIDActionPerformed
+
+    }//GEN-LAST:event_txt_delAccIDActionPerformed
+    //Delete a patient account by searching for an ID and deleting all information pertaining to it
+    private void btn_delAccDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delAccDeleteActionPerformed
         try {
             if (txt_delAccID.getText().charAt(0) == 'P'){
-                File textFile = new File("D://SOFT252//SOFT252//Coursework//Data.txt");
                 Scanner scan;
 
                 scan = new Scanner(textFile);
@@ -741,8 +754,8 @@ public final class SecretaryDashboard extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SecretaryDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-            GetDeleteRequests();
-    }//GEN-LAST:event_txt_delAccIDActionPerformed
+            GetDeleteRequests();                  
+    }//GEN-LAST:event_btn_delAccDeleteActionPerformed
 
     /**
      * @param args the command line arguments
